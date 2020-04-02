@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block herd %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.name }}'s watchlist</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    </head>
+    {% endblock %}
+<body>
+    <h1>
+        <img src="{{url_for('static',filename='images/drf类方法.png')}}" alt="">
+    </h1>
+    <p>{{ movies|length}}</p>
+    <ul>
+        <li>
+            <a href="{{ url_for('index')}}">首页</a>
+        </li>
+
+    </ul>
+    {% block content %}{% endblock %}
+    <footer>
+        <small>&copy;2020<a href="#">1901电影列表</a></small>
+    </footer>
+</body>
+</html>

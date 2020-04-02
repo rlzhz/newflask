@@ -1,57 +1,83 @@
 import os
 import sys
-
-from flask import Flask, url_for, render_template
-from flask_sqlalchemy import SQLAlchemy
 import click
+from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
+
 WIN = sys.platform.startswith('win')
+
 if WIN:
     prefix = 'sqlite:///'
+
 else:
     prefix = 'sqlite:////'
 app = Flask(__name__)
 
-
-app.config['SQLALCHEMY_DATABASE_URI'] = prefix+os.path.join(app.root_path,'data.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(
+    app.root_path, 'data.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
 class User(db.Model):
-    id = db.Column(db.Integer,primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
+
+
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(60))
+    year = db.Column(db.String(4))
+
+
 @app.route('/')
 def index():
-    # print(url_for('index'))
-    # name = 'zhaohuizhe'
-    
-    user = User.query.first() #读取用户记录
-    movies = Movie.query.all() #读取所以地电影记录
-    return render_template('index.html', name=user, movies=movies)
+    movies = Movie.query.all()
+    return render_template('index.html', movies=movies)
 
-# 注册命令
+
 @app.cli.command()
-@click.option('--drop', is_flag=True, help='Create after drop')
+@click.option('--drop', is_flag=True, help='删除创建')
 def initdb(drop):
     if drop:
-        db.drop.all()
+        db.drop_all()
     db.create_all()
-    click.echo('初始化数据库。。。')
+
 
 @app.cli.command()
 def forge():
-    db.create_all()
-    movies = [
-        {'title': '哪吒'},
-        {'title': '牧马人'}
-    ]
+    name = "zhaohuizhe"
+    movies = [{
+        "title": "大赢家",
+        "year": "2020"
+    }, {
+        "title": "囧妈",
+        "year": "2020"
+    }, {
+        "title": "战狼",
+        "year": "2020"
+    }, {
+        "title": "心花路放",
+        "year": "2020"
+    }, {
+        "title": "我的父亲母亲", 
+        "year": "2020"
+    }]
+    user = User(name=name)
+    db.session.add(user)
     for m in movies:
-        print(m)
-        movie = Movie(title=m['title'])
-        print(movie)
+        movie = Movie(title=m['title'], year=m['year'])
         db.session.add(movie)
-    
     db.session.commit()
-    click.echo('导入数据')
+    click.echo('完成')
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+@app.context_processor
+def a():
+    user = User.query.first()
+    return dict(user=user)
