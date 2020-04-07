@@ -1,4 +1,4 @@
-from flask import redirect, render_template, flash, request
+from flask import redirect, render_template, flash, request, url_for
 from blog import db,app
 from blog.models import User, Movies
 from flask_login import LoginManager, login_required, current_user, logout_user, login_user
@@ -14,8 +14,8 @@ def index():
     if request.method == 'POST':
         if not current_user.is_authenticated:
             return redirect(url_for('index'))
-        title = request.form['title']
-        year = request.form['year']
+        title = request.form['movie_name']
+        year = request.form['movie_year']
         if not title or not year or len(title) > 20 or len(year) > 4:
             flash('不能超过最大长度或为空')
             return redirect(url_for('index'))
@@ -41,8 +41,8 @@ def delete(movie_id):
 def edit(movie_id):
     movie = Movies.query.get_or_404(movie_id)
     if request.method == 'POST':
-        title = request.form['title']
-        year = request.form['year']
+        title = request.form['movie_name']
+        year = request.form['movie_year']
         if not title or not year or len(title) > 20 or len(year) > 4:
             flash('输入错误')
             return redirect(url_for('edit'), movie = movie)
