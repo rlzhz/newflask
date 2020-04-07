@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-{% block content %}
-<p>{{ movies|length}}</p>
-<ul>
-    {% for movei in movies %}
-    <li>{{movei.title}}</li>
-    {% endfor%}
-</ul>
-{% endblock %}
