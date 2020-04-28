@@ -4,66 +4,54 @@
       <div class="index-left-block all-products">
         <h2>全部产品</h2>
         <template v-for="product in productList">
-            <h3>{{ product.title }}</h3>
-            <ul>
+          <h3>{{ product.title }}</h3>
+          <ul>
             <li v-for="item in product.list">
-                <a v-bind:href="item.url">{{ item.title }}</a>
-                <span v-if="item.hot" class="hot-tag">HOT</span>
+              <a v-bind:href="item.url">{{ item.title }}</a>
+              <span v-if="item.hot" class="hot-tag">HOT</span>
             </li>
-            </ul>
-            <hr v-if="!product.last" />
+          </ul>
+          <hr v-if="!product.last" /> 
         </template>
-        
-        
-        
-        
       </div>
       <div class="index-left-block lastest-news">
         <h2>最新消息</h2>
         <ul>
-          <li v-for="item in productList.app.list">
-              <a v-bind:href="item.url">{{ item.title}}</a>
-          </li>
+          <li>kdkdkdk</li>
         </ul>
       </div>
     </div>
     <div class="index-right">
-      <slider-component></slider-component>
-      <div class='index-board-list'>
+      <div style="font-size:40px;text-align:center;line-height:300px;width:900px;height:300px;background:red;margin:0 auto;">
+          slider
+      </div>
+      <div class="index-board-list">
           <div class="index-board-item">
               <div class="index-board-item-inner">
-                <h2>戴尔电脑</h2>
-                <p>戴尔电脑就是好哇</p>
-                <div class="index-board-button">
-                    立即购买
-                </div>
+                  <h2>戴尔电脑</h2>
+                  <p>戴尔电脑就是好哇</p>
+                  <div class="index-board-button">立即购买</div>
               </div>
           </div>
           <div class="index-board-item">
               <div class="index-board-item-inner">
                   <h2>戴尔电脑</h2>
-                <p>戴尔电脑就是好哇</p>
-                <div class="index-board-button">
-                    立即购买
-                </div>
+                  <p>戴尔电脑就是好哇</p>
+                  <div class="index-board-button">立即购买</div>
               </div>
           </div>
           <div class="index-board-item">
               <div class="index-board-item-inner">
                   <h2>戴尔电脑</h2>
-                <p>戴尔电脑就是好哇</p>
-                <div class="index-board-button">
-                    立即购买
-                </div>
+                  <p>戴尔电脑就是好哇</p>
+                  <div class="index-board-button">立即购买</div>
               </div>
           </div>
           <div class="index-board-item">
               <div class="index-board-item-inner">
                   <h2>戴尔电脑</h2>
-                <p>戴尔电脑就是好哇</p>
-                <div class="index-board-button">
-                    立即购买
-                </div>
+                  <p>戴尔电脑就是好哇</p>
+                  <div class="index-board-button">立即购买</div>
               </div>
           </div>
       </div>
@@ -72,42 +60,12 @@
 </template>
 
 <script>
-import axios from 'axios';
-import SliderComponent from './sliderComponent';
-
 export default {
-  components:{
-    SliderComponent
-  },
-  mounted() {
-      var that = this
-      axios.get('api/getNewsList')
-      .then(function(response){
-          console.log(response);
-          that.newsList = response.data.list
-      })
-      .catch(function(error){
-          console.log(error);
-      })
-  },
-  mounted() {
-      var that = this
-      axios.get('api/getProductList')
-      .then(function(response){
-          console.log(response);
-          that.newsList = response.data.list
-      })
-      .catch(function(error){
-          console.log(error);
-      })
-  },
   data() {
     return {
-      newsList: [],
       productList: {
         pc: {
           title: "PC产品",
-          
           list: [
             {
               title: "数据统计",
@@ -129,8 +87,8 @@ export default {
           ]
         },
         app: {
-          last: true,
           title: "手机应用类",
+          last:true,
           list: [
             {
               title: "91助手",
@@ -147,7 +105,8 @@ export default {
             },
             {
               title: "语音助手",
-              url: "http://phone.com"
+              url: "http://phone.com",
+              hot:true
             }
           ]
         }
@@ -156,6 +115,7 @@ export default {
   }
 };
 </script>
+
 <style scoped>
 .index-wrapper {
   width: 1200px;
@@ -163,19 +123,19 @@ export default {
   display: flex;
 }
 .index-left {
-  width: 298px;
+  width: 300px;
 }
 .index-right {
   width: 900px;
 }
 .index-left-block {
   margin: 15px;
-  background: #fff;
+  background: #ffffff;
   box-shadow: 0 0 1px #ddd;
   border-radius: 0 0 10px 10px;
 }
 .index-left-block h2 {
-  color: #fff;
+  color: #ffffff;
   background: #4fc08d;
   padding: 10px 15px;
   margin-bottom: 15px;
@@ -188,12 +148,13 @@ export default {
 .index-left-block ul {
   padding: 10px 15px;
 }
-.index-left-block ul li {
+.index-left-block li {
   padding: 5px;
 }
 .hot-tag{
-    color:white;
-    background: purple;
+    color: white;
+    background:purple;
+    font-size: 13px;
 }
 .index-board-list{
     display: flex;
@@ -202,7 +163,7 @@ export default {
 }
 .index-board-item{
     width: 400px;
-    background: #fff;
+    background:#fff;
     box-shadow: 0 0 1px #ddd;
     margin-bottom: 20px;
     padding-top: 20px;
@@ -218,7 +179,7 @@ export default {
 .index-board-item-inner h2{
     font-size: 18px;
     font-weight: bolder;
-    color:#000;
+    color: #000000;
     margin-bottom: 15px;
 }
 .index-board-item-inner p{
@@ -228,10 +189,9 @@ export default {
     width: 80px;
     height: 30px;
     line-height: 30px;
-    background: limegreen;
     color: #fff;
+    background:limegreen;
     border-radius: 5px;
     text-align: center;
-
 }
 </style>

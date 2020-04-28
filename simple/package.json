@@ -2,7 +2,7 @@
   "name": "simple",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "赵慧喆 <925774232@qq.com>",
+  "author": "Bruce <1046244623@qq.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -10,8 +10,6 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "axios": "^0.19.2",
-    "mockjs": "^1.1.0",
     "vue": "^2.5.11",
     "vue-router": "^3.1.6"
   },
